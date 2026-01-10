@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RTU Semester 3 SGPA Calculator</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:20px}
+.container{background:white;padding:20px;max-width:500px;margin:auto;border-radius:10px}
+.row{display:flex;justify-content:space-between;margin-bottom:10px}
+input{width:70px;padding:5px}
+h2{text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>RTU Sem 3 SGPA Calculator</h2>
+<div id="subjects"></div>
+<h3>SGPA: <span id="sgpa">0.00</span></h3>
+</div>
+<script>
+const subjects = [
+  {name:'Managerial Economics', credit:1},
+  {name:'Statistics & Probability', credit:3},
+  {name:'DSA', credit:4},
+  {name:'Operating System', credit:3},
+  {name:'Software Engineering', credit:3},
+  {name:'Digital Electronics', credit:3},
+  {name:'DSA Lab', credit:1.5},
+  {name:'Java Lab', credit:1.5},
+  {name:'SE Lab', credit:1.5},
+  {name:'DE Lab', credit:1.5},
+  {name:'Industrial Training', credit:1},
+  {name:'Social Outreach', credit:0.5}
+];
+
+function gradePoint(m){
+ if(m>=91) return 10;
+ if(m>=81) return 9;
+ if(m>=71) return 8;
+ if(m>=61) return 7;
+ if(m>=51) return 6;
+ if(m>=41) return 5;
+ if(m==40) return 4;
+ return 0;
+}
+
+const div=document.getElementById('subjects');
+subjects.forEach((s,i)=>{
+ div.innerHTML+=`<div class='row'>${s.name} (${s.credit}) <input type='number' id='m${i}' oninput='calc()'></div>`;
+});
+
+function calc(){
+ let total=0, credits=0;
+ subjects.forEach((s,i)=>{
+  let m=document.getElementById('m'+i).value;
+  if(m!==""){
+   let gp=gradePoint(parseFloat(m));
+   total+=gp*s.credit;
+   credits+=s.credit;
+  }
+ });
+ let sgpa=credits? (total/credits).toFixed(2):'0.00';
+ document.getElementById('sgpa').innerText=sgpa;
+}
+</script>
+</body>
+</html>
+
